@@ -18,11 +18,13 @@ const App = () => {
         <Hero />
         <Philosophy />
         <Services />
+      </main>
+      <OurWork />
+      <main className="container mx-auto px-6">
         <Process />
         <Clients />
         <Advantage />
         <CTA />
-        <OurWork />
       </main>
       <Footer />
     </>

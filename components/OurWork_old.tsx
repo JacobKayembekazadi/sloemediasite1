@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 const OurWork = () => {
   const [activeProject, setActiveProject] = useState(0);
-  const [showFullImage, setShowFullImage] = useState(false);
-  const [currentImage, setCurrentImage] = useState('');
 
   const projects = [
     {
@@ -15,7 +13,8 @@ const OurWork = () => {
       cardImage: "/images/headphone brand 2.jpg",
       backgroundImage: "/images/headphone brand 2.jpg",
       leftBlockTitle: "AETHEL AUDIO LIFESTYLE",
-      leftBlockDescription: "AI-assisted product photography for premium headphones creating stunning visual narratives."
+      leftBlockDescription: "AI-assisted product photography for premium headphones creating stunning visual narratives.",
+      caseStudyUrl: "/case-study/aethel-audio"
     },
     {
       id: 2,
@@ -26,7 +25,8 @@ const OurWork = () => {
       cardImage: "/images/save the planet 1.jpg",
       backgroundImage: "/images/save the planet 1.jpg",
       leftBlockTitle: "HAPPY EARTH DAY CAMPAIGN",
-      leftBlockDescription: "AI-generated imagery for environmental awareness and conservation initiatives worldwide."
+      leftBlockDescription: "AI-generated imagery for environmental awareness and conservation initiatives worldwide.",
+      caseStudyUrl: "/case-study/happy-earth"
     },
     {
       id: 3,
@@ -37,7 +37,8 @@ const OurWork = () => {
       cardImage: "/images/food delivery app 1.jpg",
       backgroundImage: "/images/food delivery app 1.jpg",
       leftBlockTitle: "FOOD DELIVERY APP",
-      leftBlockDescription: "Modern food delivery application design with AI-enhanced user experience and intuitive interfaces."
+      leftBlockDescription: "Modern food delivery application design with AI-enhanced user experience and intuitive interfaces.",
+      caseStudyUrl: "/case-study/food-delivery"
     },
     {
       id: 4,
@@ -48,57 +49,10 @@ const OurWork = () => {
       cardImage: "/images/chair brand 1.jpg",
       backgroundImage: "/images/chair brand 1.jpg",
       leftBlockTitle: "CHAIR COLLECTION",
-      leftBlockDescription: "Artistic representation of unique furniture concepts and visual identities generated with AI."
+      leftBlockDescription: "Artistic representation of unique furniture concepts and visual identities generated with AI.",
+      caseStudyUrl: "/case-study/chair-collection"
     }
   ];
-
-  const openFullImage = (imageUrl: string) => {
-    console.log('openFullImage called with:', imageUrl);
-    setCurrentImage(imageUrl);
-    setShowFullImage(true);
-    console.log('State updated - showFullImage should be true');
-  };
-
-  const closeFullImage = () => {
-    setShowFullImage(false);
-    setCurrentImage('');
-  };
-  // If full image is open, show it
-  if (showFullImage) {
-    return (
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center"
-        style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh' }}
-        onClick={closeFullImage}
-      >
-        {/* Close button */}
-        <button 
-          onClick={closeFullImage}
-          title="Close image viewer"
-          className="absolute top-4 right-4 z-10 bg-white bg-opacity-20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-opacity-30 transition-all duration-300"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        
-        {/* Full screen image */}
-        <img
-          src={currentImage}
-          alt="Project Image"
-          className="max-w-[90%] max-h-[90%] object-contain rounded-lg shadow-2xl"
-          onClick={(e) => e.stopPropagation()}
-        />
-        
-        {/* Image info overlay */}
-        <div className="absolute bottom-4 left-4 text-white">
-          <div className="bg-black bg-opacity-50 backdrop-blur-sm rounded-lg px-4 py-2">
-            <p className="text-sm">Click anywhere outside the image to close</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -113,23 +67,23 @@ const OurWork = () => {
           transition: background-image 1s ease-in-out;
         }
       `}</style>
+    <section id="our-work" className="relative min-h-screen bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out overflow-hidden"
+             style={{ backgroundImage: `url(${projects[activeProject].backgroundImage})` }}>
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       
-      <section id="our-work" className="relative min-h-screen bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out overflow-hidden"
-               style={{ backgroundImage: `url(${projects[activeProject].backgroundImage})` }}>
-        {/* Background overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        
-        {/* Content container */}
-        <div className="relative z-10 min-h-screen flex flex-col">
-          {/* Section header */}
-          <div className="flex justify-center items-center pt-16 pb-8">
-            <h2 className="text-white text-4xl font-bold uppercase tracking-wider">Our Work</h2>
-          </div>
+      {/* Content container */}
+      <div className="relative z-10 min-h-screen flex flex-col">
+        {/* Section header */}
+        <div className="flex justify-center items-center pt-16 pb-8">
+          <h2 className="text-white text-4xl font-bold uppercase tracking-wider">Our Work</h2>
+        </div>
 
-          {/* Main content area - Only carousel, centered */}
-          <div className="flex-1 flex items-center justify-center px-8 pb-32">
-            <div className="flex space-x-6 overflow-visible">
-              {projects.map((project, index) => (
+        {/* Main content area - Only carousel, no left text block */}
+        <div className="flex-1 flex items-center justify-center px-8 pb-32">
+          {/* Project carousel - centered */}
+          <div className="flex space-x-6 overflow-visible">
+            {projects.map((project, index) => (
                 <div
                   key={project.id}
                   className={`
@@ -143,12 +97,7 @@ const OurWork = () => {
                     width: index === activeProject ? '320px' : '300px',
                     height: index === activeProject ? '400px' : '380px'
                   }}
-                  onClick={(e) => {
-                    // Only change active project if the click wasn't on the button
-                    if (!(e.target as HTMLElement).closest('.explore-button')) {
-                      setActiveProject(index);
-                    }
-                  }}
+                  onClick={() => setActiveProject(index)}
                 >
                   {/* Card image - full background */}
                   <img
@@ -188,20 +137,20 @@ const OurWork = () => {
                       </p>
                       
                       {/* CTA Button */}
-                      <button
-                        type="button"
-                        className="explore-button group flex items-center justify-between w-full bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 hover:bg-white/30 transition-all duration-300 cursor-pointer focus:outline-none"
+                      <button 
+                        className="group flex items-center justify-between w-full bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 hover:bg-white/30 transition-all duration-300"
                         onClick={(e) => {
-                          e.preventDefault();
                           e.stopPropagation();
-                          openFullImage(project.cardImage);
+                          // For now, show an alert. In a real app, this would navigate to the case study page
+                          alert(`Opening case study for ${project.title}...`);
+                          // In a real app with routing: navigate(project.caseStudyUrl);
                         }}
                       >
                         <span className="text-sm font-medium">Explore Now</span>
-                        <svg
-                          className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
-                          fill="none"
-                          stroke="currentColor"
+                        <svg 
+                          className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" 
+                          fill="none" 
+                          stroke="currentColor" 
                           viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -227,30 +176,33 @@ const OurWork = () => {
               ))}
             </div>
           </div>
-
-          {/* Navigation arrows with enhanced styling */}
-          <div className="absolute bottom-8 left-8 flex space-x-4">
-            <button 
-              onClick={() => setActiveProject(prev => prev > 0 ? prev - 1 : projects.length - 1)}
-              className="w-14 h-14 rounded-full border-2 border-white/40 flex items-center justify-center text-white text-xl hover:bg-white/20 hover:border-white/60 transition-all duration-300 backdrop-blur-sm"
-            >
-              ←
-            </button>
-            <button 
-              onClick={() => setActiveProject(prev => prev < projects.length - 1 ? prev + 1 : 0)}
-              className="w-14 h-14 rounded-full border-2 border-white/40 flex items-center justify-center text-white text-xl hover:bg-white/20 hover:border-white/60 transition-all duration-300 backdrop-blur-sm"
-            >
-              →
-            </button>
-          </div>
-
-          {/* Project counter with enhanced styling */}
-          <div className="absolute bottom-8 right-8 text-white">
-            <div className="text-5xl font-bold mb-2">0{activeProject + 1}</div>
-            <div className="text-sm opacity-60 tracking-wider">/ 0{projects.length}</div>
+        </div>
           </div>
         </div>
-      </section>
+
+        {/* Navigation arrows with enhanced styling */}
+        <div className="absolute bottom-8 left-8 flex space-x-4">
+          <button 
+            onClick={() => setActiveProject(prev => prev > 0 ? prev - 1 : projects.length - 1)}
+            className="w-14 h-14 rounded-full border-2 border-white/40 flex items-center justify-center text-white text-xl hover:bg-white/20 hover:border-white/60 transition-all duration-300 backdrop-blur-sm"
+          >
+            ←
+          </button>
+          <button 
+            onClick={() => setActiveProject(prev => prev < projects.length - 1 ? prev + 1 : 0)}
+            className="w-14 h-14 rounded-full border-2 border-white/40 flex items-center justify-center text-white text-xl hover:bg-white/20 hover:border-white/60 transition-all duration-300 backdrop-blur-sm"
+          >
+            →
+          </button>
+        </div>
+
+        {/* Project counter with enhanced styling */}
+        <div className="absolute bottom-8 right-8 text-white">
+          <div className="text-5xl font-bold mb-2">0{activeProject + 1}</div>
+          <div className="text-sm opacity-60 tracking-wider">/ 0{projects.length}</div>
+        </div>
+      </div>
+    </section>
     </>
   );
 };
