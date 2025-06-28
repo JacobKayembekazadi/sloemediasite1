@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -9,8 +8,9 @@ import Clients from './components/Clients';
 import Advantage from './components/Advantage';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import OurWork from './components/OurWork';
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <>
       <Header />
@@ -22,6 +22,7 @@ const App: React.FC = () => {
         <Clients />
         <Advantage />
         <CTA />
+        <OurWork />
       </main>
       <Footer />
     </>
