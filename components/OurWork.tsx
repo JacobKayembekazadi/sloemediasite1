@@ -123,28 +123,30 @@ const OurWork = () => {
         <div className="relative z-10 min-h-screen flex flex-col">
           {/* Section header */}
           <div className="flex justify-center items-center pt-16 pb-8">
-            <h2 className="text-white text-4xl font-bold uppercase tracking-wider">Our Work</h2>
+            <h2 className="text-white text-3xl md:text-4xl font-bold uppercase tracking-wider">Our Work</h2>
           </div>
 
-          {/* Main content area - Only carousel, centered */}
-          <div className="flex-1 flex items-center justify-center px-8 pb-32">
-            <div className="flex space-x-6 overflow-visible">
+          {/* Main content area - Responsive carousel */}
+          <div className="flex-1 flex items-center justify-center px-2 md:px-8 pb-20 md:pb-32">
+            <div className="flex md:space-x-6 space-x-4 md:flex-nowrap flex-nowrap overflow-x-auto w-full scrollbar-hide">
               {projects.map((project, index) => (
                 <div
                   key={project.id}
                   className={`
                     relative cursor-pointer transition-all duration-700 ease-out rounded-2xl overflow-hidden
                     ${index === activeProject 
-                      ? 'scale-110 z-20 transform translate-y-0' 
-                      : 'scale-90 z-10 opacity-75 hover:opacity-90 hover:scale-95'
+                      ? 'md:scale-110 md:z-20 md:transform md:translate-y-0 scale-100 z-10' 
+                      : 'md:scale-90 md:z-10 md:opacity-75 md:hover:opacity-90 md:hover:scale-95 opacity-80'
                     }
                   `}
                   style={{
-                    width: index === activeProject ? '320px' : '300px',
-                    height: index === activeProject ? '400px' : '380px'
+                    minWidth: '80vw',
+                    maxWidth: 340,
+                    width: '90vw',
+                    height: '320px',
+                    marginRight: '1rem',
                   }}
                   onClick={(e) => {
-                    // Only change active project if the click wasn't on the button
                     if (!(e.target as HTMLElement).closest('.explore-button')) {
                       setActiveProject(index);
                     }
@@ -161,7 +163,7 @@ const OurWork = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                   
                   {/* Content overlay */}
-                  <div className="absolute inset-0 p-6 flex flex-col justify-between text-white">
+                  <div className="absolute inset-0 p-3 md:p-6 flex flex-col justify-between text-white">
                     {/* Top section - Category and country flag simulation */}
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-medium uppercase tracking-wider opacity-90">
@@ -172,32 +174,25 @@ const OurWork = () => {
                     
                     {/* Bottom section - Title, stats, and CTA */}
                     <div>
-                      {/* Title */}
-                      <h3 className="text-2xl font-bold mb-1 text-shadow-lg">
+                      <h3 className="text-lg md:text-2xl font-bold mb-1 text-shadow-lg">
                         {project.title}
                       </h3>
-                      
-                      {/* Subtitle */}
-                      <p className="text-sm opacity-90 mb-3">
+                      <p className="text-xs md:text-sm opacity-90 mb-2 md:mb-3">
                         {project.subtitle}
                       </p>
-                      
-                      {/* Stats */}
-                      <p className="text-xs opacity-75 mb-4">
+                      <p className="text-xs opacity-75 mb-2 md:mb-4">
                         {project.stats}
                       </p>
-                      
-                      {/* CTA Button */}
                       <button
                         type="button"
-                        className="explore-button group flex items-center justify-between w-full bg-white/20 backdrop-blur-sm rounded-lg px-4 py-3 hover:bg-white/30 transition-all duration-300 cursor-pointer focus:outline-none"
+                        className="explore-button group flex items-center justify-between w-full bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2 md:px-4 md:py-3 hover:bg-white/30 transition-all duration-300 cursor-pointer focus:outline-none text-xs md:text-sm"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
                           openFullImage(project.cardImage);
                         }}
                       >
-                        <span className="text-sm font-medium">Explore Now</span>
+                        <span className="font-medium">Explore Now</span>
                         <svg
                           className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
                           fill="none"
@@ -212,7 +207,7 @@ const OurWork = () => {
 
                   {/* Active indicator */}
                   {index === activeProject && (
-                    <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-orange-500 rounded-full shadow-lg"></div>
+                    <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-orange-500 rounded-full shadow-lg hidden md:block"></div>
                   )}
                   
                   {/* Enhanced shadow for active card */}
@@ -228,8 +223,8 @@ const OurWork = () => {
             </div>
           </div>
 
-          {/* Navigation arrows with enhanced styling */}
-          <div className="absolute bottom-8 left-8 flex space-x-4">
+          {/* Navigation arrows and counter - hide on mobile */}
+          <div className="hidden md:absolute md:bottom-8 md:left-8 md:flex md:space-x-4">
             <button 
               onClick={() => setActiveProject(prev => prev > 0 ? prev - 1 : projects.length - 1)}
               className="w-14 h-14 rounded-full border-2 border-white/40 flex items-center justify-center text-white text-xl hover:bg-white/20 hover:border-white/60 transition-all duration-300 backdrop-blur-sm"
@@ -243,9 +238,7 @@ const OurWork = () => {
               →
             </button>
           </div>
-
-          {/* Project counter with enhanced styling */}
-          <div className="absolute bottom-8 right-8 text-white">
+          <div className="hidden md:absolute md:bottom-8 md:right-8 md:block text-white">
             <div className="text-5xl font-bold mb-2">0{activeProject + 1}</div>
             <div className="text-sm opacity-60 tracking-wider">/ 0{projects.length}</div>
           </div>
