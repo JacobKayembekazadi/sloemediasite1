@@ -115,7 +115,7 @@ graph TD
 - **Philosophy**: Brand positioning and AI/Human synergy explanation
 - **Services**: Interactive showcase of ScaleKit™ offerings
 - **Process**: 5-step operational model visualization
-- **Clients**: Segmented content for product vs. service-based businesses
+- **Clients**: Segmented bulleted lists for product vs. service-based businesses
 - **Advantage**: Key differentiators and competitive advantages
 - **CTA**: Lead generation with external calendar booking
 

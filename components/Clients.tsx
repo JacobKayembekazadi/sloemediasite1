@@ -31,20 +31,20 @@ const clientData: Record<ClientType, ClientDetails> = {
 };
 
 const ClientContent: React.FC<{ data: ClientDetails }> = ({ data }) => (
-  <div className="bg-white p-8 rounded-xl shadow-xl grid md:grid-cols-2 gap-8 items-center">
-    <div>
-      <h4 className="text-2xl font-bold mb-4">{data.title}</h4>
-      <p className="mb-2"><strong className="text-slate-800">Goal:</strong> {data.goal}</p>
-      <p><strong className="text-slate-800">Pain Point Solved:</strong> {data.painPoint}</p>
-    </div>
-    <div>
-      <h5 className="font-bold text-lg mb-3">How We Focus:</h5>
-      <ul className="list-none space-y-2 mb-4">
-        {data.focus.map(item => <li key={item} className="flex items-start"><span className="text-cyan-500 mr-2 mt-1">✓</span> {item}</li>)}
-      </ul>
-      <h5 className="font-bold text-lg mb-2">Key Metrics We Track:</h5>
-      <div className="flex flex-wrap gap-2">
-        {data.metrics.map(metric => <span key={metric} className="bg-slate-100 text-slate-700 text-sm font-medium px-3 py-1 rounded-full">{metric}</span>)}
+  <div className="bg-white p-8 rounded-xl shadow-xl">
+    <h4 className="text-2xl font-bold mb-6 text-center">{data.title}</h4>
+    <div className="grid md:grid-cols-2 gap-8">
+      <div>
+        <h5 className="font-bold text-lg mb-3">How We Focus:</h5>
+        <ul className="list-none space-y-2">
+          {data.focus.map(item => <li key={item} className="flex items-start"><span className="text-cyan-500 mr-2 mt-1">✓</span> {item}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h5 className="font-bold text-lg mb-3">Key Metrics We Track:</h5>
+        <ul className="list-none space-y-2">
+          {data.metrics.map(metric => <li key={metric} className="flex items-start"><span className="text-cyan-500 mr-2 mt-1">✓</span> {metric}</li>)}
+        </ul>
       </div>
     </div>
   </div>
