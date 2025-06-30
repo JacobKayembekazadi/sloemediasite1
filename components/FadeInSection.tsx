@@ -1,13 +1,13 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 
 interface FadeInSectionProps {
   children: React.ReactNode;
   className?: string;
   id?: string;
+  style?: React.CSSProperties;
 }
 
-const FadeInSection: React.FC<FadeInSectionProps> = ({ children, className = '', id }) => {
+const FadeInSection: React.FC<FadeInSectionProps> = ({ children, className = '', id, style }) => {
   const [isVisible, setVisible] = useState(false);
   const domRef = useRef<HTMLDivElement | null>(null);
 
@@ -42,6 +42,7 @@ const FadeInSection: React.FC<FadeInSectionProps> = ({ children, className = '',
     <div
       id={id}
       ref={domRef}
+      style={style}
       className={`${className} transition-opacity duration-600 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
     >
       {children}
